@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #fafaf9;
+  color: #0b0c0e;
+}
+
+/* Wallet-selector modal overrides to match our aesthetic */
+.nws-modal-wrapper {
+  --wallet-selector-heading-color: #0b0c0e;
+  --wallet-selector-text-color: #0b0c0e;
+}
