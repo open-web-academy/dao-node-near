@@ -135,7 +135,7 @@ export const ProposalList = forwardRef<
               methodName: "act_proposal",
               args: { id, action },
               gas: DAO_ACT_PROPOSAL_GAS,
-              deposit: "1",
+              deposit: "0",
             },
           },
         ],
