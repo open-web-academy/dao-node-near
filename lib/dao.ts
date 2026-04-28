@@ -103,5 +103,5 @@ export function findCouncilRole(policy: Policy, accountId: string): Role | null 
 // The DAO change-method JSON shapes. These are consumed by the wallet
 // selector's signAndSendTransaction call.
 export const DAO_ADD_PROPOSAL_GAS = "200000000000000"; // 200 Tgas
-export const DAO_ACT_PROPOSAL_GAS = "150000000000000"; // 150 Tgas
+export const DAO_ACT_PROPOSAL_GAS = "300000000000000"; // 300 Tgas (max) — DAO needs to attach inner action gas to the cross-contract call
 export const DEFAULT_PROPOSAL_BOND = "100000000000000000000000"; // 0.1 NEAR
