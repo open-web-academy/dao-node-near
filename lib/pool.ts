@@ -31,3 +31,16 @@ export async function isAccountUnstakedBalanceAvailable(
 export async function getPoolAccount(pool: string, accountId: string): Promise<PoolAccount> {
   return viewCall<PoolAccount>(pool, "get_account", { account_id: accountId });
 }
+
+export interface RewardFeeFraction {
+  numerator: number;
+  denominator: number;
+}
+
+export async function getRewardFeeFraction(pool: string): Promise<RewardFeeFraction> {
+  return viewCall<RewardFeeFraction>(pool, "get_reward_fee_fraction", {});
+}
+
+export async function getOwnerId(pool: string): Promise<string> {
+  return viewCall<string>(pool, "get_owner_id", {});
+}

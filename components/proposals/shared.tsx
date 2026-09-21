@@ -144,7 +144,11 @@ export function ProposalSection({
           <JsonPreview value={proposal} />
         )}
         <div className="flex items-center justify-between gap-3">
-          <StatusLine status={status} />
+          {status.kind === "idle" && !canCreate && canCreateReason ? (
+            <div className="font-mono text-[11px] text-warn">{canCreateReason}</div>
+          ) : (
+            <StatusLine status={status} />
+          )}
           <button
             disabled={!canCreate || hasError || status.kind === "submitting"}
             onClick={onCreate}

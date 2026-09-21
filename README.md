@@ -15,6 +15,8 @@ This app lets a council member:
 - View the DAO's pool position (staked / unstaking / ready / native).
 - Build the three proposal payloads with a live JSON preview.
 - Create proposals directly from a connected wallet.
+- Propose a new pool reward fee (`update_reward_fee_fraction`) — only works
+  if the DAO is the pool's `owner_id`.
 - Vote (Approve / Reject / Remove) on in-flight proposals.
 
 Everything is direct-from-RPC — no backend, no indexer, no database.

@@ -137,3 +137,54 @@ export function buildTransferProposal(params: {
     },
   };
 }
+
+function gcd(a: bigint, b: bigint): bigint {
+  while (b) [a, b] = [b, a % b];
+  return a;
+}
+
+/**
+ * Convert a percentage string ("5", "2.5", "0.25") into the reduced
+ * `RewardFeeFraction { numerator, denominator }` the pool expects (both u32).
+ */
+export function percentToFraction(percent: string): { numerator: number; denominator: number } {
+  const s = percent.trim().replace(/\s*%$/, "").replace(",", ".");
+  if (!/^\d+(\.\d+)?$/.test(s)) throw new Error(`invalid fee: ${percent}`);
+  const [whole, frac = ""] = s.split(".");
+  if (frac.length > 4) throw new Error("too many decimals (max 4)");
+  let num = BigInt(`${whole}${frac}`);
+  let den = 100n * 10n ** BigInt(frac.length);
+  if (num > den) throw new Error("fee cannot exceed 100%");
+  const g = num === 0n ? den : gcd(num, den);
+  num /= g;
+  den /= g;
+  return { numerator: Number(num), denominator: Number(den) };
+}
+
+function fmtPercent(f: { numerator: number; denominator: number }): string {
+  return String(Number(((f.numerator / f.denominator) * 100).toFixed(4)));
+}
+
+export function buildFeeProposal(params: {
+  pool: string;
+  feePercent: string;
+}): FunctionCallProposal {
+  const { pool, feePercent } = params;
+  const reward_fee_fraction = percentToFraction(feePercent);
+  return {
+    description: `Change reward fee of ${pool} to ${fmtPercent(reward_fee_fraction)}%`,
+    kind: {
+      FunctionCall: {
+        receiver_id: pool,
+        actions: [
+          {
+            method_name: "update_reward_fee_fraction",
+            args: toBase64(JSON.stringify({ reward_fee_fraction })),
+            deposit: "0",
+            gas: POOL_ACTION_GAS,
+          },
+        ],
+      },
+    },
+  };
+}

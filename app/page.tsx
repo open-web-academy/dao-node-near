@@ -7,6 +7,7 @@ import { BalancePanel } from "@/components/BalancePanel";
 import { UnstakeProposal } from "@/components/proposals/UnstakeProposal";
 import { WithdrawProposal } from "@/components/proposals/WithdrawProposal";
 import { TransferProposal } from "@/components/proposals/TransferProposal";
+import { FeeProposal } from "@/components/proposals/FeeProposal";
 import { ProposalList, type ProposalListHandle } from "@/components/ProposalList";
 import { CouncilBadge } from "@/components/CouncilBadge";
 import { useConfig } from "@/lib/config";
@@ -50,7 +51,8 @@ export default function Page() {
         <UnstakeProposal policy={policy} role={role} onProposalCreated={onProposalCreated} />
         <WithdrawProposal policy={policy} role={role} onProposalCreated={onProposalCreated} />
         <TransferProposal policy={policy} role={role} onProposalCreated={onProposalCreated} />
-        <ProposalList ref={listRef} role={role} sectionLabel="§6 proposals (last 20)" />
+        <FeeProposal policy={policy} role={role} onProposalCreated={onProposalCreated} />
+        <ProposalList ref={listRef} role={role} sectionLabel="§7 proposals (last 20)" />
       </div>
 
       <footer className="mt-12 font-mono text-[10px] text-ink-muted flex justify-between">
