@@ -18,6 +18,7 @@ import {
 import { setupModal, type WalletSelectorModal } from "@near-wallet-selector/modal-ui";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
+import { installAccessKeyListShim } from "@/lib/accessKeyListShim";
 
 type TxOutcome = unknown;
 
@@ -58,6 +59,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
+    installAccessKeyListShim();
     (async () => {
       try {
         const sel = await setupWalletSelector({
